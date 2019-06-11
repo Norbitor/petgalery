@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "pets-galery-dev-20190611125134-authRole",
+            "UnauthRoleArn": "arn:aws:iam::646953230093:role/pets-galery-dev-20190611125134-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::646953230093:role/pets-galery-dev-20190611125134-authRole",
+            "Region": "eu-central-1",
+            "DeploymentBucketName": "pets-galery-dev-20190611125134-deployment",
+            "UnauthRoleName": "pets-galery-dev-20190611125134-unauthRole",
+            "StackName": "pets-galery-dev-20190611125134",
+            "StackId": "arn:aws:cloudformation:eu-central-1:646953230093:stack/pets-galery-dev-20190611125134/e145ee50-8c36-11e9-b15d-0ac03387fd40"
+        }
+    }
+}
