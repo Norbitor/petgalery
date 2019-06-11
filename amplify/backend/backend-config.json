@@ -1,1 +1,8 @@
-{}
+{
+	"auth": {
+		"petsgalery92dc655e": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

@@ -9,6 +9,11 @@
             "UnauthRoleName": "pets-galery-dev-20190611125134-unauthRole",
             "StackName": "pets-galery-dev-20190611125134",
             "StackId": "arn:aws:cloudformation:eu-central-1:646953230093:stack/pets-galery-dev-20190611125134/e145ee50-8c36-11e9-b15d-0ac03387fd40"
+        },
+        "categories": {
+            "auth": {
+                "petsgalery92dc655e": {}
+            }
         }
     }
 }
