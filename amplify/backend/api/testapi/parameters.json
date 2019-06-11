@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "testapi",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authpetsgalery92dc655e",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

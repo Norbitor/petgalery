@@ -1,0 +1,22 @@
+type Pet @model {
+  id: ID!
+  name: String!
+  species: String!
+  race: String
+  bornYear: Int
+  photos: [Photo] @connection(name: "PetPhotos")
+}
+
+type Photo @model {
+  id: ID!
+  pet: Pet @connection(name: "PetPhotos")
+  bucket: String!
+  fullsize: PhotoS3Info!
+  thumbnail: PhotoS3Info!
+}
+
+type PhotoS3Info @model {
+  key: String!
+  width: Int!
+  height: Int!
+}
