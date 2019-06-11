@@ -15,5 +15,22 @@
                 "petsgalery92dc655e": {}
             }
         }
+    },
+    "devdwa": {
+        "awscloudformation": {
+            "AuthRoleName": "pets-galery-devdwa-20190611143202-authRole",
+            "UnauthRoleArn": "arn:aws:iam::111938456248:role/pets-galery-devdwa-20190611143202-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::111938456248:role/pets-galery-devdwa-20190611143202-authRole",
+            "Region": "eu-west-1",
+            "DeploymentBucketName": "pets-galery-devdwa-20190611143202-deployment",
+            "UnauthRoleName": "pets-galery-devdwa-20190611143202-unauthRole",
+            "StackName": "pets-galery-devdwa-20190611143202",
+            "StackId": "arn:aws:cloudformation:eu-west-1:111938456248:stack/pets-galery-devdwa-20190611143202/eab86a90-8c44-11e9-b0f4-0a1f01fad44c"
+        },
+        "categories": {
+            "auth": {
+                "petsgalery92dc655e": {}
+            }
+        }
     }
 }
