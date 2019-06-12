@@ -112,7 +112,7 @@ const ListPets = `query ListPets {
 class PetsListLoader extends React.Component {
   onNewPet = (prevQuery, newData) => {
     let updatedQuery = Object.assign({}, prevQuery);
-    updatedQuery.ListPets.items = prevQuery.ListPets.items.concat([newData.onCreatePet]);
+    updatedQuery.listPets.items = prevQuery.listPets.items.concat([newData.onCreatePet]);
     return updatedQuery;
   }
   render() {
@@ -124,6 +124,7 @@ class PetsListLoader extends React.Component {
         
         {({ data, loading, errors }) => {
           if (loading) { return <div>Loading...</div> }
+          if (errors.length > 0) { return <div>{JSON.stringify(errors)}</div>; }
           if (!data.listPets) return;
           return <PetsList pets={data.listPets.items} />;
         }}
@@ -212,51 +213,6 @@ class NewPet extends Component {
    }
 }
 
-// class NewPet extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       petName: ''
-//      };
-//    }
-
-//   handleChange = (event) => {
-//     let change = {};
-//     change[event.target.name] = event.target.value;
-//     this.setState(change);
-//   }
-
-//   handleSubmit = async (event) => {
-//     event.preventDefault();
-//     const NewPet = `mutation NewPet ($name: String!) {
-//       createPet(input:{name:"$name", species: "$name"}) {
-//         id
-//         name
-//       }
-// }`;
-    
-//     const result = await API.graphql(graphqlOperation(NewPet, { name: this.state.petName }));
-//     console.info(`Created pet with id ${result.data.createPet.id}`);
-//   }
-
-//   render() {
-//     return (
-//       <Segment>
-//         <Header as='h3'>Add a new pet</Header>
-//          <Input
-//           type='text'
-//           placeholder='New Pet Name'
-//           icon='plus'
-//           iconPosition='left'
-//           action={{ content: 'Create', onClick: this.handleSubmit }}
-//           name='petName'
-//           value={this.state.petName}
-//           onChange={this.handleChange}
-//          />
-//         </Segment>
-//       )
-//    }
-// }
 
 const SubscribeToNewPets = `
   subscription OnCreatePet {
@@ -276,6 +232,7 @@ class App extends Component {
         <Grid.Column>
           <NewPet />
           <PetsListLoader />
+        
         </Grid.Column>
       </Grid>
     );
