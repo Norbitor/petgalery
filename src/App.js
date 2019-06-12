@@ -132,13 +132,14 @@ class PetsListLoader extends React.Component {
   }
 }
 
-
 class NewPet extends Component {
   constructor(props) {
     super(props);
     this.state = {
       petName: '',
-      petSpecies: ''
+      petSpecies: '',
+      race: '',
+      bornYear: ''
      };
    }
 
@@ -151,14 +152,14 @@ class NewPet extends Component {
 //, race:"$race", bornYear:"$born"
   handleSubmit = async (event) => {
     event.preventDefault();
-    const NewPet = `mutation createPet($name: String!, $species: String!) {
-      createPet(input: {name:"$name", species:"$species"}) {
+    const NewPet = `mutation NewPet($name: String!, $species: String!, $race: String, $bornYear: Int) {
+      createPet(input: {name: $name, species: $species, race: $race, bornYear: $bornYear}) {
         id
         name
       }
 }`;
-    console.info(`this.state.petName ${this.state.petName}`);
-    const result = await API.graphql(graphqlOperation(NewPet, { name: this.state.petName, species: this.state.petSpecies}));
+
+    const result = await API.graphql(graphqlOperation(NewPet, { name: this.state.petName, species: this.state.petSpecies, race: this.state.petSpecies, bornYear: this.state.bornYear}));
     console.info(`Created pet with id ${result.data.createPet.id}`);
   }
 
@@ -181,15 +182,81 @@ class NewPet extends Component {
           placeholder='New Pet Species'
           icon='plus'
           iconPosition='left'
-          action={{ content: 'Create', onClick: this.handleSubmit }}
+         
           name='petSpecies'
           value={this.state.petSpecies}
+          onChange={this.handleChange}
+         />
+        <Input
+          type='text'
+          placeholder='New Pet Race'
+          icon='plus'
+          iconPosition='left'
+          
+          name='petRace'
+          value={this.state.petRace}
+          onChange={this.handleChange}
+         />
+        <Input
+          type='nuber'
+          placeholder='New Pet birth date'
+          icon='plus'
+          iconPosition='left'
+          action={{ content: 'Create', onClick: this.handleSubmit }}
+          name='bornYear'
+          value={this.state.bornYear}
           onChange={this.handleChange}
          />
         </Segment>
       )
    }
 }
+
+// class NewPet extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       petName: ''
+//      };
+//    }
+
+//   handleChange = (event) => {
+//     let change = {};
+//     change[event.target.name] = event.target.value;
+//     this.setState(change);
+//   }
+
+//   handleSubmit = async (event) => {
+//     event.preventDefault();
+//     const NewPet = `mutation NewPet ($name: String!) {
+//       createPet(input:{name:"$name", species: "$name"}) {
+//         id
+//         name
+//       }
+// }`;
+    
+//     const result = await API.graphql(graphqlOperation(NewPet, { name: this.state.petName }));
+//     console.info(`Created pet with id ${result.data.createPet.id}`);
+//   }
+
+//   render() {
+//     return (
+//       <Segment>
+//         <Header as='h3'>Add a new pet</Header>
+//          <Input
+//           type='text'
+//           placeholder='New Pet Name'
+//           icon='plus'
+//           iconPosition='left'
+//           action={{ content: 'Create', onClick: this.handleSubmit }}
+//           name='petName'
+//           value={this.state.petName}
+//           onChange={this.handleChange}
+//          />
+//         </Segment>
+//       )
+//    }
+// }
 
 const SubscribeToNewPets = `
   subscription OnCreatePet {
