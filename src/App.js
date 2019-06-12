@@ -5,6 +5,7 @@ import { Connect } from 'aws-amplify-react';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Form, Grid, Header, Input, List, Segment } from 'semantic-ui-react';
 import {v4 as uuid} from 'uuid';
+import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
 
 import React from 'react';
 import { Component } from 'react';
@@ -68,8 +69,31 @@ class S3ImageUpload extends React.Component {
   }
 }
 
+const GetPet = `query GetPet($id: ID!) {
+  getPet(id: $id) {
+    id
+    name
+  }
+}
+`;
+
+class PetsDetailsLoader extends React.Component {
+  render() {
+    return (
+      <Connect query={graphqlOperation(GetPet, { id: this.props.id })}>
+        {({ data, loading, errors }) => {
+          if (loading) { return <div>Loading...</div>; }
+          if (errors.length > 0) { return <div>{JSON.stringify(errors)}</div>; }
+          if (!data.GetPet) return;
+          return <PetDetails pet={data.GetPet} />;
+        }}
+      </Connect>
+    );
+  }
+}
 class PetDetails extends Component {
   render() {
+    if (!this.props.pet) return 'Loading pet...';
     return (
       <Segment>
         <Header as='h3'>{this.props.pet.name}</Header>
@@ -82,10 +106,10 @@ class PetDetails extends Component {
 class PetsList extends React.Component {
   petItems() {
     return this.props.pets.sort(makeComparator('name')).map(pet =>
-        <li key={pet.id}>
-          {pet.name}
-        </li>
-      );
+      <List.Item key={pet.id}>
+        <NavLink to={`/pets/${pet.id}`}>{pet.name}</NavLink>
+      </List.Item>
+    );
   }
 
   render() {
@@ -228,13 +252,22 @@ const SubscribeToNewPets = `
 class App extends Component {
   render() {
     return (
-      <Grid padded>
-        <Grid.Column>
-          <NewPet />
-          <PetsListLoader />
-        
-        </Grid.Column>
-      </Grid>
+      <Router>
+        <Grid padded>
+          <Grid.Column>
+            <Route path="/" exact component={NewPet}/>
+            <Route path="/" exact component={PetsListLoader}/>
+            <Route
+              path="/pets/:petId"
+              render={ () => <div><NavLink to='/'>Back to Pets list</NavLink></div> }
+            />
+            <Route
+              path="/pets/:petId"
+              render={ props => <PetsDetailsLoader id={props.match.params.petID}/> }
+            />
+          </Grid.Column>
+        </Grid>
+      </Router>
     );
   }
 }
