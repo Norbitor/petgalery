@@ -9,6 +9,10 @@
 		"petsDB": {
 			"service": "DynamoDB",
 			"providerPlugin": "awscloudformation"
+		},
+		"petgallerystorage": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	},
 	"api": {
