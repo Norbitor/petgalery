@@ -85,7 +85,7 @@ class PetsDetailsLoader extends React.Component {
           if (loading) { return <div>Loading...</div>; }
           if (errors.length > 0) { return <div>{JSON.stringify(errors)}</div>; }
           if (!data.GetPet) return;
-          return <PetDetails pet={data.GetPet} />;
+          return <PetDetails pet={data.getPet} />;
         }}
       </Connect>
     );
@@ -182,7 +182,7 @@ class NewPet extends Component {
         id
         name
       }
-}`;
+    }`;
 
     const result = await API.graphql(graphqlOperation(NewPet, { name: this.state.petName, species: this.state.petSpecies, race: this.state.petSpecies, bornYear: this.state.bornYear}));
     console.info(`Created pet with id ${result.data.createPet.id}`);
@@ -247,8 +247,6 @@ const SubscribeToNewPets = `
   }
 `;
 
-
-
 class App extends Component {
   render() {
     return (
@@ -263,7 +261,7 @@ class App extends Component {
             />
             <Route
               path="/pets/:petId"
-              render={ props => <PetsDetailsLoader id={props.match.params.petID}/> }
+              render={ props => <PetsDetailsLoader id={props.match.params.petId}/> }
             />
           </Grid.Column>
         </Grid>
