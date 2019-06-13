@@ -6,6 +6,8 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Form, Grid, Header, Input, List, Segment } from 'semantic-ui-react';
 import {v4 as uuid} from 'uuid';
 import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
+import { S3Image } from 'aws-amplify-react';
+import { Divider } from 'semantic-ui-react';
 
 import React from 'react';
 import { Component } from 'react';
@@ -46,6 +48,14 @@ class S3ImageUpload extends React.Component {
       }
     );
     console.log('Uploaded file: ', result);
+    const NewPhoto = `mutation( $bucket: String!, $photoPetId: ID!){
+      createPhoto(input: { bucket: $bucket, photoPetId: $photoPetId}){
+        id 
+      }
+    }`;
+    console.info(`${fileName} ${this.props.petId}`);
+    const resultPhotoData = await API.graphql(graphqlOperation(NewPhoto, { bucket: fileName, photoPetId: this.props.petId, }));
+    console.info(`Created petPhoto with id ${resultPhotoData.data.createPhoto.id}`);
     this.setState({uploading: false});
   }
   render() {
@@ -133,6 +143,25 @@ const ListPets = `query ListPets {
   }
 }`;
 
+class PhotosList extends React.Component {
+  photoItems() {
+    return this.props.photos.map(photo =>
+      <S3Image 
+        key={photo.thumbnail.key} 
+        imgKey={photo.thumbnail.key.replace('public/', '')} 
+        style={{display: 'inline-block', 'paddingRight': '5px'}}
+      />
+    );
+  }
+  render() {
+    return (
+      <div>
+        <Divider hidden />
+        {this.photoItems()}
+      </div>
+    );
+  }
+}
 class PetsListLoader extends React.Component {
   onNewPet = (prevQuery, newData) => {
     let updatedQuery = Object.assign({}, prevQuery);
