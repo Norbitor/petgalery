@@ -83,9 +83,14 @@ const GetPet = `query GetPet($id: ID!) {
   getPet(id: $id) {
     id
     name
+    photos {
+      items {
+        id
+        bucket
+      }
+    }
   }
-}
-`;
+}`;
 
 class PetsDetailsLoader extends React.Component {
   render() {
@@ -101,6 +106,8 @@ class PetsDetailsLoader extends React.Component {
     );
   }
 }
+
+//  
 class PetDetails extends Component {
   render() {
     if (!this.props.pet) return 'Loading pet...';
@@ -109,6 +116,7 @@ class PetDetails extends Component {
         <Header as='h3'>{this.props.pet.name}</Header>
         <S3ImageUpload petId={this.props.pet.id}/>        
         <p>TODO: Show photos for this pet</p>
+        <PhotosList photos={this.props.pet.photos.items} />
       </Segment>
     )
   }
@@ -147,8 +155,8 @@ class PhotosList extends React.Component {
   photoItems() {
     return this.props.photos.map(photo =>
       <S3Image 
-        key={photo.thumbnail.key} 
-        imgKey={photo.thumbnail.key.replace('public/', '')} 
+        key={photo.bucket} 
+        imgKey={'uploads/'+photo.bucket} 
         style={{display: 'inline-block', 'paddingRight': '5px'}}
       />
     );
