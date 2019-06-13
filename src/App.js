@@ -43,7 +43,7 @@ class S3ImageUpload extends React.Component {
       fileName, 
       file, 
       {
-        customPrefix: { public: 'uploads/' },
+       
         metadata: { petid: this.props.petId }
       }
     );
@@ -156,7 +156,7 @@ class PhotosList extends React.Component {
     return this.props.photos.map(photo =>
       <S3Image 
         key={photo.bucket} 
-        imgKey={'uploads/'+photo.bucket} 
+        imgKey={photo.bucket} 
         style={{display: 'inline-block', 'paddingRight': '5px'}}
       />
     );
@@ -211,7 +211,6 @@ class NewPet extends Component {
     this.setState(change);
   }
 
-//, race:"$race", bornYear:"$born"
   handleSubmit = async (event) => {
     event.preventDefault();
     const NewPet = `mutation NewPet($name: String!, $species: String!, $race: String, $bornYear: Int) {
