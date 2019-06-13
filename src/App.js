@@ -158,6 +158,7 @@ class PhotosList extends React.Component {
         key={photo.bucket} 
         imgKey={photo.bucket} 
         style={{display: 'inline-block', 'paddingRight': '5px'}}
+        theme={{ photoImg: { width: '300px', height: '300px' } }}
       />
     );
   }
