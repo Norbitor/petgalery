@@ -84,7 +84,7 @@ class PetsDetailsLoader extends React.Component {
         {({ data, loading, errors }) => {
           if (loading) { return <div>Loading...</div>; }
           if (errors.length > 0) { return <div>{JSON.stringify(errors)}</div>; }
-          if (!data.GetPet) return;
+          if (!data.getPet) return;
           return <PetDetails pet={data.getPet} />;
         }}
       </Connect>
