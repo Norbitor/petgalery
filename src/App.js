@@ -89,6 +89,9 @@ const GetPet = `query GetPet($id: ID!) {
         bucket
       }
     }
+    species
+    bornYear
+    race
   }
 }`;
 
@@ -113,7 +116,8 @@ class PetDetails extends Component {
     if (!this.props.pet) return 'Loading pet...';
     return (
       <Segment>
-        <Header as='h3'>{this.props.pet.name}</Header>
+        <Header as='h3'>{this.props.pet.name} born {this.props.pet.bornYear}</Header>
+        <p>{this.props.pet.species} - {this.props.pet.race}</p>
         <S3ImageUpload petId={this.props.pet.id}/>
         <PhotosList photos={this.props.pet.photos.items} />
       </Segment>
