@@ -114,8 +114,7 @@ class PetDetails extends Component {
     return (
       <Segment>
         <Header as='h3'>{this.props.pet.name}</Header>
-        <S3ImageUpload petId={this.props.pet.id}/>        
-        <p>TODO: Show photos for this pet</p>
+        <S3ImageUpload petId={this.props.pet.id}/>
         <PhotosList photos={this.props.pet.photos.items} />
       </Segment>
     )
