@@ -4,8 +4,6 @@ you can create your pets' profiles and add some photo to it.
 This app is an project done with React and Amplify framework and works fully
 on AWS.
 
-You can check it out under https://www.petsgalery.norbitor.net.pl.
-
 This project is for graduation of "Designing Distributed Systems" laboratory part.
 
 ## Development
